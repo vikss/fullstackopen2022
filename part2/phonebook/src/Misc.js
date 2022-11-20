@@ -1,4 +1,4 @@
-
+import "./index.css"
 const SearchFilter = (props) => {
     return (<div>filter shown with <input value={props.searchTerm} onChange={props.handleSearchTermChange} /></div>)
 
@@ -9,7 +9,7 @@ const DisplayPersons = (props) => {
     const onDelete = props.handleDelete;
     const filteredArray = persons.filter(person => person.name.toLowerCase().includes(searchTerm))
     return (<div>
-        {filteredArray.map(person => <DisplayPerson onDelete = {onDelete} person={person} />)}
+        {filteredArray.map(person => <DisplayPerson onDelete={onDelete} person={person} />)}
     </div>)
 }
 const DisplayPerson = ({ person, onDelete }) => {
@@ -36,4 +36,30 @@ const AddPersonForm = (props) => {
         </form>)
 
 }
-export { SearchFilter, AddPersonForm, DisplayPersons }
+const Notification = ({ message }) => {
+    if (message == null) {
+        console.log("Message is null.")
+        return null;
+
+    }
+    else if (message.includes("Added")) {
+        console.log("Setting a notification.")
+        return (
+            <div className='notification'>
+                {message}
+            </div>
+        )
+    }
+    else if (message.includes("Information of")) {
+        console.log("Setting an error.")
+        return (
+            <div className='error'>
+                {message}
+            </div>
+        )
+
+
+    }
+
+}
+export { SearchFilter, AddPersonForm, DisplayPersons, Notification }

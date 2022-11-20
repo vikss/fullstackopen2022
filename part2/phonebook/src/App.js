@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { AddPersonForm, DisplayPersons, SearchFilter } from './Misc'
+import { AddPersonForm, DisplayPersons, SearchFilter, Notification } from './Misc'
 import { add, getAll, update, deleteDoc } from './services'
 
 const App = () => {
@@ -7,6 +7,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
+  const [message, setMessage] = useState(null)
   const url = "http://localhost:3000/persons"
 
   useEffect(() => {
@@ -57,11 +58,15 @@ const App = () => {
 
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
         console.log("Updating to ", obj)
-        update(url, result.id, obj).then(response => console.log(response.data))
-        let newArray = persons.filter(p => p.name !== newName)
-        setPersons(newArray.concat(obj))
-        setNewName('')
-        setNewNumber('')
+        update(url, result.id, obj).then(response => {
+          console.log(response.data)
+          let newArray = persons.filter(p => p.name !== newName)
+          setPersons(newArray.concat(obj))
+          setMessage(`Added ${newName}`)
+
+        }).catch(error => { setMessage(`Information of ${newName} has already been removed from server`) })
+
+
       }
 
     }
@@ -70,9 +75,13 @@ const App = () => {
 
       add(url, obj).then(response => console.log(response.data))
       setPersons(persons.concat(obj))
-      setNewName('')
-      setNewNumber('')
+      setMessage(`Added ${newName}`)
+
     }
+
+    setNewName('')
+    setNewNumber('')
+    setTimeout(() => { setMessage(null) }, 10000);
 
   }
   const handleSearchTermChange = (event) => {
@@ -83,6 +92,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message}></Notification>
 
       <SearchFilter searchTerm={searchTerm} handleSearchTermChange={handleSearchTermChange}></SearchFilter>
 
