@@ -8,7 +8,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
   const [message, setMessage] = useState(null)
-  const url = "http://localhost:3000/persons"
+  const url = "/api/persons"
 
   useEffect(() => {
     getAll(url).then(response => {
