@@ -7,7 +7,7 @@ const entrySchema = new mongo.Schema({
     name: { type: String, required: true, minLength: 3 }, number: { type: String, validate: {validator: function(v){
        
 
-        return /\d{2,3}-\d{5,}/.test(v);
+        return /(\d{2,3}-\d{5,})|(\d{8,})/.test(v);
     }, message: props => `${props.value} is not a valid phone number!`},required: true, minLength: 8 }
 })
 entrySchema.set('toJSON', {
