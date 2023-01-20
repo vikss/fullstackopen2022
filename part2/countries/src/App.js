@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import { useEffect, useState } from 'react';
 import React from 'react';
 import axios from 'axios';
-
+require('dotenv').config();
 
 
 
