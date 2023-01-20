@@ -50,7 +50,7 @@ const Notification = ({ message }) => {
             </div>
         )
     }
-    else if (message.includes("Information of")) {
+    else {
         console.log("Setting an error.")
         return (
             <div className='error'>

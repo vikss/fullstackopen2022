@@ -44,8 +44,14 @@ const App = () => {
 
     if (window.confirm(`Delete ${person.name}`)) {
       let tempUrl = `${url}/${person.id}`
-      deleteDoc(tempUrl).then(response => console.log(response.data));
-      setPersons(personsArray)
+      deleteDoc(tempUrl).then(response => {
+        setPersons(personsArray)
+        console.log(response.data)
+      }).catch(error => {
+        setMessage(error.response.data.error)
+        setTimeout(() => { setMessage(null) }, 10000);
+      });
+
     }
 
   }
@@ -64,8 +70,12 @@ const App = () => {
           setPersons(newArray.concat(obj))
           setMessage(`Added ${newName}`)
 
-        }).catch(error => { setMessage(`Information of ${newName} has already been removed from server`) })
+        }).catch(error => {
 
+          console.log(error)
+          setMessage(error.response.data.error)
+
+        }).finally((res) => setTimeout(() => { setMessage(null) }, 10000))
 
       }
 
@@ -73,10 +83,12 @@ const App = () => {
 
     else {
 
-      add(url, obj).then(response => console.log(response.data))
-      setPersons(persons.concat(obj))
-      setMessage(`Added ${newName}`)
-
+      add(url, obj).then(response => {
+        console.log(response.data)
+        setPersons(persons.concat(obj))
+        setMessage(`Added ${newName}`)
+      }
+      ).catch(error => setMessage(error.response.data.error))
     }
 
     setNewName('')

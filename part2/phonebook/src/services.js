@@ -6,7 +6,6 @@ const add = (url, obj) => {
     return request;
 }
 const getAll = (url) => {
-
     const request = axios.get(url)
     return request;
 
