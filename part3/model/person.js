@@ -1,5 +1,6 @@
 const mongo = require('mongoose')
 mongo.set('strictQuery', true)
+require('dotenv').config()
 
 const url = process.env.MONGODB_URI
 const entrySchema = new mongo.Schema({
