@@ -4,10 +4,10 @@
   "description": "Blog application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test":"jest --verbose"
   },
   "author": "vj",
   "license": "ISC",
@@ -21,5 +21,8 @@
     "express": "^4.18.2",
     "http": "^0.0.1-security",
     "mongoose": "^6.8.4"
+  },
+  "jest":{
+    "testEnvironment": "node"
   }
 }
