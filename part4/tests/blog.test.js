@@ -68,7 +68,7 @@ describe(("total likes"),() => {
 })
 describe("Most liked",() => {
 
-    test.only("most liked blogs",() => {
+    test("most liked blogs",() => {
         const blogs = [
             {
                 _id: "5a422a851b54a676234d17f7",
@@ -104,7 +104,6 @@ describe("Most liked",() => {
         }
 
         const mostLiked = listHelper.favoriteBlog(blogs)
-        console.log(mostLiked)
         expect(mostLiked).toEqual(result)
 
 

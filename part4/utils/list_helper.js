@@ -1,9 +1,9 @@
+var _ = require("lodash")
 const dummy = (blogs) => {
     return 1
 }
 const likes = (blogs) => {
     const sum= blogs.reduce((initialSum, blog) => initialSum+Number(blog.likes), 0)
-    console.log(sum)
     return sum
 
 }
@@ -18,5 +18,10 @@ const favoriteBlog = (blogs) => {
         }
     }
     return mostLiked
+}
+const mostBlog = (blogs) => {
+
+
+
 }
 module.exports={ dummy,likes, favoriteBlog }
