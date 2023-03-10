@@ -1,9 +1,12 @@
 const mongoose = require("mongoose")
 const supertest = require("supertest")
 const app = require("../app")
-const blog = require("../models/blog")
 const BlogModel = require("../models/blog")
+const logger = require("../utils/logger")
 
+
+jest.setTimeout(20000)
+logger.info(`Mongoose connection state is: ${mongoose.connection.readyState}`)
 const blogsList = [{ "title":"Why is there activated charcoal in everything?",
     "author":"Sara Hussain",
     "url":"https://tweakindia.com/wellness/health/why-is-there-activated-charcoal-in-everything/",
@@ -50,6 +53,29 @@ test("expected title", async () => {
     expect(titles).toContain("Hoarding stationery is the best kind of hoarding")
 
 },10000)
+test("a valid blog entry can be added", async () => {
+    let entry = { "title":"12 holiday reads that make the best travel companions",
+        "author":"Kahini Iyer",
+        "url":"https://tweakindia.com/living/travel/12-holiday-reads-that-make-the-best-travel-companions/",
+        "likes":12 }
+    let res = await api.get("/api/blogs")
+    let countBlogs = res.body.length
+    logger.log(`Number of blogs before the post request ${countBlogs}`)
+    logger.log("Adding a new blog")
+    let response = await api.post("/api/blogs").send(entry).expect(201).expect("Content-Type","application/json; charset=utf-8")
+    logger.info(response)
+
+    res = await api.get("/api/blogs")
+    let titles = res.body.map(r => r.title)
+    let newCountBlogs = res.body.length
+    expect(newCountBlogs).toBe(countBlogs+1)
+    expect(titles).toContain("12 holiday reads that make the best travel companions")
+
+
+},10000)
+
+
+
 afterAll(async () => {
     await mongoose.connection.close()
 })
